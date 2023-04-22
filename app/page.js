@@ -1,10 +1,24 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import { connectDB } from "@/util/database"
 
-export default function Home() {
+
+
+export default async function Home() {
+
+  const db = (await connectDB).db("nextjs")
+  
+  let result = await db.collection('study1').find().toArray()
+
+  // console.log(result)
+
+  let name = 'park'
+
   return (
-    <div>
-      <h4>안녕</h4>
-    </div>
+    <main>
+
+      <div>
+        <h1 className="title">Programming Log</h1>
+        <p className="title-sub">by dev kim</p>
+      </div>
+    </main>
   )
 }
