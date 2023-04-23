@@ -10,7 +10,7 @@ export default function ListItem({ posts }) {
             {posts.map((post, i) =>
 
                 <div className="list-item" key={i}>
-                    <Link prefetch={false} href={'/detail/a' + post._id}><h4>{post.title}</h4></Link>
+                    <Link prefetch={false} href={'/detail/' + post._id}><h4>{post.title}</h4></Link>
                     <p>1월 1일</p>
                     <Link href={'/edit/' + post._id}>Edit</Link>
 
