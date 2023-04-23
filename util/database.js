@@ -1,7 +1,8 @@
 import { MongoClient } from 'mongodb'
-import config from './config'
 
-const url = `mongodb+srv://${config.name}:${config.password}@cluster0.akash.mongodb.net/?retryWrites=true&w=majority`
+require("dotenv").config();
+
+const url = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@cluster0.akash.mongodb.net/?retryWrites=true&w=majority`
 const options = { useNewUrlParser: true }
 let connectDB
 

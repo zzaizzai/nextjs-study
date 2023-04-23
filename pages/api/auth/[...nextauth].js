@@ -1,15 +1,16 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import config from "./config";
+require("dotenv").config();
 
+console.log(process.env.DB_NAME)
 
 export const authOptions = {
     providers: [
         GithubProvider({
-            clientId: config.clientId,
-            clientSecret: config.clientSecret,
+            clientId: process.env.clientId,
+            clientSecret: process.env.clientSecret,
         }),
     ],
-    secret: config.secret
+    secret: process.env.secret
 };
 export default NextAuth(authOptions); 
