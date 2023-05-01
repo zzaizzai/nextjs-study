@@ -1,14 +1,11 @@
-import { connectDB } from "@/util/database"
+import { checkConnect } from "@/util/database"
 
 
 
 export default async function Home() {
 
-  const db = (await connectDB).db("nextjs")
-  
-  let result = await db.collection('study1').find().toArray()
-
-  // console.log(result)
+  // const db = (await connectDB).db("nextjs")
+  let result = await checkConnect()
 
   let name = 'park'
 

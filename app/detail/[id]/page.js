@@ -1,13 +1,13 @@
-import { connectDB } from "@/util/database"
-import { ObjectId } from "mongodb"
+import { getOnePost } from "@/util/database"
+// import { ObjectId } from "mongodb"
 import Comment from "./Comment"
 
 
 export default async function Detail(props) {
     
-    const db = (await connectDB).db("nextjs")
-    let post = await db.collection('post').findOne({ _id: new ObjectId(props.params.id) })
-    
+    // const db = (await connectDB).db("nextjs")
+    // let post = await db.collection('post').findOne({ _id: new ObjectId(props.params.id) })
+    let post = await getOnePost(props.params.id)
     return (
         <div>
             <h5>good</h5>

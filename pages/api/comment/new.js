@@ -13,6 +13,7 @@ export default async function handler(req, res) {
         return res.redirect('/')
     }
     console.log(!session)
+    console.log("session")
     if (req.method == 'POST') {
         let data = JSON.parse(req.body)
 

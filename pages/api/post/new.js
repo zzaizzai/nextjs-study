@@ -1,6 +1,7 @@
 import { connectDB } from "@/util/database"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../auth/[...nextauth]"
+import { getSession } from "../auth/auth"
 
 export default async function handler(req, res) {
 
