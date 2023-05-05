@@ -1,18 +1,16 @@
-import { connectDB } from "@/util/database"
-import { ObjectId } from "mongodb"
-
+import { getEditPost } from "@/util/database"
 
 export default async function Edit(props) {
 
-    const db = (await connectDB).db("nextjs")
-    let post = await db.collection('post').findOne({ _id: new ObjectId(props.params.id) })
+    let post = await getEditPost(props.params.id)
 
     return (
-        <div className="p-20">
-            <h4>글편집</h4>
+        <div className="container">
             <form action="/api/post/edit" method="POST">
-                <input name="title" placeholder="title" defaultValue={post.title} />
-                <input name="content" placeholder="content" defaultValue={post.content} />
+                <label for="title">Title</label>
+                <input type="text" name="title" placeholder="Title" defaultValue={post.title} />
+                <label for="content">Content</label>
+                <input type="text" name="content" placeholder="Content" defaultValue={post.content} />
                 <input name="_id" defaultValue={post._id.toString()} style={{ display: 'none' }} />
                 <button type="submit">Edit</button>
             </form>

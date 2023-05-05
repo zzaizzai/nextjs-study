@@ -16,8 +16,6 @@ if (process.env.NODE_ENV === 'development') {
   connectDB = new MongoClient(url, options).connect()
 }
 
-
-
 async function checkConnect() {
   try {
     const db = (await connectDB).db("nextjs");
@@ -60,7 +58,57 @@ async function getCommentsOfPost(parentId) {
 
 }
 
+async function uploadComment(content, parentId, author) {
+
+  let newData = {
+    content: content,
+    parent: new ObjectId(parentId),
+    authorName: author.name,
+    authorEmail: author.email,
+    authorImage: author.image,
+  }
+  try {
+    const db = (await connectDB).db("nextjs")
+    let result = await db.collection('post-comment').insertOne(newData)
+    return result
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+async function deletePost(id) {
+  try {
+    const db = (await connectDB).db("nextjs");
+    const result = await db.collection('post').deleteOne({ _id: new ObjectId(id) })
+    return result
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+async function getEditPost(id) {
+  try {
+    const db = (await connectDB).db("nextjs");
+    let post = await db.collection('post').findOne({ _id: new ObjectId(id) })
+    return post
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+async function uploadEditPost(id, newData_obj) {
+  try {
+    const db = (await connectDB).db("nextjs");
+    let result = await db.collection('post').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: newData_obj }
+    )
+    return result
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 module.exports = {
-  checkConnect, getAllPosts, getOnePost, getCommentsOfPost
+  checkConnect, getAllPosts, getOnePost, getCommentsOfPost, uploadComment, deletePost, getEditPost, uploadEditPost
 }

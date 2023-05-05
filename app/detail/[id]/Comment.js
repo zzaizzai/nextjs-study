@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState } from "react"
 
 
@@ -16,11 +15,15 @@ export default function Comment(props) {
 
     return (
         <div>
-            <div>Comment</div>
+            <h3>Comment</h3>
 
             {data.map((a, i) => {
                 return (
-                    <p key={i}>{a.content}</p>
+
+                    <div key={i} className="comment">
+                        <img className="comment-author-image" src={a.authorImage ?? "https://source.boringavatars.com/beam"} alt="Sample Image" width={500} height={300} />
+                        {a.authorName ? a.authorName : <div>unknown</div>}: {a.content ? a.content : <div>????</div>}
+                    </div>
                 )
             })}
             <input onChange={(e) => {
@@ -35,6 +38,8 @@ export default function Comment(props) {
                                 comment: comment,
                                 _id: props._id
                             })
+                    }).then(() => {
+                        location.reload()
                     })
             }} >Done</button>
         </div>

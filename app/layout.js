@@ -17,16 +17,16 @@ export default async function RootLayout({ children }) {
 
   let session = await getServerSession(authOptions)
   if (session) {
-    // console.log(session)
+    console.log(session)
   }
   return (
     <html lang="en">
       <body>
         <div className="navbar">
           <Link href="/">home</Link>
-          <Link href="/list">list페이지</Link>
-          {/* <LoginBtn /> */}
-          {session?.user.name ? <LogoutBtn /> : <LoginBtn />}
+          <Link href="/list">List</Link>
+          <Link href="/write">Write</Link>
+          <div className='login-button'>{session?.user.name ? <LogoutBtn /> : <LoginBtn />}</div>
         </div>
         {children}
       </body>

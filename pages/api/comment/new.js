@@ -1,4 +1,4 @@
-import { connectDB } from "@/util/database"
+import { uploadComment } from "@/util/database"
 import { ObjectId } from "mongodb"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../auth/[...nextauth]"
@@ -7,35 +7,27 @@ import { authOptions } from "../auth/[...nextauth]"
 
 export default async function handler(req, res) {
 
-    let session = await getServerSession(req, res, authOptions)
 
-    if (!session) {
-        return res.redirect('/')
-    }
-    console.log(!session)
-    console.log("session")
+
     if (req.method == 'POST') {
+
+        let session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            return res.redirect('/')
+        }
+
+
         let data = JSON.parse(req.body)
 
-        let newData = {
-            content: data.comment,
-            parent: new ObjectId(data._id),
-            author: session.user.email,
-        }
-
-
         try {
-
-            const db = (await connectDB).db("nextjs")
-            let result = await db.collection('post-comment').insertOne(newData)
-
+            let result = await uploadComment(data.comment, data._id, session.user)
+            return res.redirect(200)
         } catch (error) {
             return res.status(500).json('something error')
+        } finally {
 
         }
-        return res.status(200).redirect('done')
-
-
 
     }
 
