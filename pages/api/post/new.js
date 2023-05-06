@@ -11,16 +11,16 @@ export default async function handler(req, res) {
     }
 
     if (req.method == 'POST') {
-        console.log(req.body)
 
         let newData = req.body
 
         if (req.body.title == '' || req.body.content == '') {
-            return res.status(500).json('ss')
+            return res.status(500).redirect('/write')
         }
 
         let result = await uploadNewPost(newData, user)
-        return res.status(200).redirect('/list')
+        var id_new = result.insertedId.toString()
+        return res.status(200).redirect('/detail/' + id_new)
     }
 
     return res.status(200).redirect('/write')

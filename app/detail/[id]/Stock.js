@@ -49,12 +49,17 @@ export default function Stock(props) {
             <div>
                 {recordList.map((record, i) => {
                     return (
-                        <div key={i} className="comment">
-                            {record.positive ? <span className="stock-positive-bg ">+</span> : <span className="stock-negative-bg" >-&nbsp; </span>}
+                        <div key={i} className={record.positive ? "stock-positive-bg stock-record" : "stock-negative-bg stock-record"}>
+                            {
+                                record.positive ?
+                                    "+"
+                                    : ""
+                            }
                             {record.number_change}
                             <span className="mx-10">{record.purpose ? record.purpose : "test"}</span>
                             <span className="mx-10">{record.authorName}</span>
-                            <div className="text-muted">{record.date} </div> </div>
+                            <div className="text-muted">{record.date} </div>
+                        </div>
                     )
 
                 })}</div>

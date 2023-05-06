@@ -1,7 +1,4 @@
-
-import { isLoggedIn, getUserData } from "@/pages/api/auth/auth.js"
 export default async function Write() {
-    let isLogin = await isLoggedIn()
 
     return (
         <div className="container">
@@ -9,7 +6,7 @@ export default async function Write() {
                 <label for="title">Title</label>
                 <input type="text" name="title" placeholder="Title" />
                 <label for="content">Content</label>
-                <input type="text" name="content" placeholder="Content" />
+                <textarea type="text" rows="8" cols="70" name="content" placeholder="Content" />
                 <button type="submit">Write</button>
             </form>
         </div>

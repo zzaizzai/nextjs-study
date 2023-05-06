@@ -157,6 +157,7 @@ async function uploadNewPost(data, author) {
   try {
     const db = (await connectDB).db("nextjs")
     let result = await db.collection('post').insertOne(newData)
+    return result
   } catch (err) {
     console.error(err)
   }

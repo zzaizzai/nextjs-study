@@ -10,7 +10,7 @@ export default async function Edit(props) {
                 <label for="title">Title</label>
                 <input type="text" name="title" placeholder="Title" defaultValue={post.title} />
                 <label for="content">Content</label>
-                <input type="text" name="content" placeholder="Content" defaultValue={post.content} />
+                <textarea type="text" rows="8" cols="70" name="content" placeholder="Content" defaultValue={post.content} />
                 <input name="_id" defaultValue={post._id.toString()} style={{ display: 'none' }} />
                 <button type="submit">Edit</button>
             </form>
