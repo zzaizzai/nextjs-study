@@ -45,6 +45,30 @@ async function getAllPosts(sort) {
   }
 }
 
+async function getAllStockOfPost(parentId) {
+  const db = (await connectDB).db("nextjs");
+  const documents = await db.collection('stock').find({ parent: new ObjectId(parentId) }).toArray()
+  return documents
+}
+
+async function uploadNewStock(parentId, data, author) {
+
+  var newData = {
+    parent: new ObjectId(parentId),
+    positive: data.positive,
+    purpose: data.purpose,
+    number_change: data.number_change,
+    authorEmail: author.email,
+    authorName: author.name,
+    authorImage: author.image,
+    date: new Date(),
+  }
+
+  const db = (await connectDB).db("nextjs")
+  let result = await db.collection('stock').insertOne(newData)
+
+}
+
 async function getOnePost(_id) {
   try {
     const db = (await connectDB).db("nextjs");
@@ -123,7 +147,7 @@ async function uploadNewPost(data, author) {
 
   let newData = {
     title: data.title,
-    contnet: data.content,
+    content: data.content,
     date: new Date(),
     authorEmail: author.email,
     authorName: author.name,
@@ -142,5 +166,5 @@ module.exports = {
   checkConnect, getAllPosts, getOnePost,
   getCommentsOfPost, uploadComment,
   deletePost, getEditPost, uploadEditPost,
-  uploadNewPost
+  uploadNewPost, uploadNewStock, getAllStockOfPost
 }
