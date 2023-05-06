@@ -13,8 +13,7 @@ export default async function Home() {
     <main>
 
       <div>
-        <h1 className="title">Programming Log</h1>
-        <p className="title-sub">by dev kim</p>
+        <h1 className="title">Junsai's Study Page</h1>
       </div>
     </main>
   )

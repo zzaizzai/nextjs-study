@@ -1,5 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
+import dayjs from 'dayjs'
+import { dateFormatFromNow } from '@/util/displayFormat.js'
 
 
 export default function Comment(props) {
@@ -9,7 +11,16 @@ export default function Comment(props) {
     let [data, setData] = useState([])
     useEffect(() => {
         fetch('/api/comment/list?id=' + props._id).then(r => r.json()).then((result) => {
+            result.forEach(element => {
+                if (element.date) {
+                    element.date = element.date
+                } else {
+                    element.date = dayjs('2023-05-05 12:00:00')
+                }
+                element.date = dateFormatFromNow(element.date)
+            });
             setData(result)
+
         })
     }, [])
 
@@ -21,12 +32,14 @@ export default function Comment(props) {
                 return (
 
                     <div key={i} className="comment">
+
                         <img className="comment-author-image" src={a.authorImage ?? "https://source.boringavatars.com/beam"} alt="Sample Image" width={500} height={300} />
                         {a.authorName ? a.authorName : <div>unknown</div>}: {a.content ? a.content : <div>????</div>}
+                        <div className="comment-date">{a.date ? a.date : <div>ddd</div>}</div>
                     </div>
                 )
             })}
-            <input onChange={(e) => {
+            <input type="text" onChange={(e) => {
                 setComment(e.target.value)
             }} />
             <button onClick={() => {

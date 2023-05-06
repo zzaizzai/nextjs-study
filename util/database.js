@@ -27,10 +27,18 @@ async function checkConnect() {
   }
 }
 
-async function getAllPosts() {
+async function getAllPosts(sort) {
+  var sort_db = -1
+
+  if (sort == "date") {
+    sort_db = -1
+  }
   try {
     const db = (await connectDB).db("nextjs");
-    const documents = await db.collection('post').find().toArray();
+    const documents = await db.collection('post')
+      .find()
+      .sort({ date: sort_db })
+      .toArray();
     return documents
   } catch (err) {
     console.error(err)
@@ -66,6 +74,7 @@ async function uploadComment(content, parentId, author) {
     authorName: author.name,
     authorEmail: author.email,
     authorImage: author.image,
+    date: new Date()
   }
   try {
     const db = (await connectDB).db("nextjs")
@@ -80,6 +89,7 @@ async function deletePost(id) {
   try {
     const db = (await connectDB).db("nextjs");
     const result = await db.collection('post').deleteOne({ _id: new ObjectId(id) })
+    const result_2 = await db.collection('post-comment').deleteMany({ parent: new ObjectId(id) })
     return result
   } catch (err) {
     console.error(err)
@@ -109,6 +119,28 @@ async function uploadEditPost(id, newData_obj) {
   }
 }
 
+async function uploadNewPost(data, author) {
+
+  let newData = {
+    title: data.title,
+    contnet: data.content,
+    date: new Date(),
+    authorEmail: author.email,
+    authorName: author.name,
+    authorImage: author.image,
+  }
+
+  try {
+    const db = (await connectDB).db("nextjs")
+    let result = await db.collection('post').insertOne(newData)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 module.exports = {
-  checkConnect, getAllPosts, getOnePost, getCommentsOfPost, uploadComment, deletePost, getEditPost, uploadEditPost
+  checkConnect, getAllPosts, getOnePost,
+  getCommentsOfPost, uploadComment,
+  deletePost, getEditPost, uploadEditPost,
+  uploadNewPost
 }

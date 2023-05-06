@@ -1,4 +1,8 @@
-export default function Write() {
+
+import { isLoggedIn, getUserData } from "@/pages/api/auth/auth.js"
+export default async function Write() {
+    let isLogin = await isLoggedIn()
+
     return (
         <div className="container">
             <form action="/api/post/new" method="POST">

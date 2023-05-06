@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 export default async function Detail(props) {
 
     let post = await getOnePost(props.params.id)
-    // console.log(post)
     post.time = post.time?.toString()
+    console.log(post)
 
     if (!post) {
         return notFound()
@@ -19,6 +19,7 @@ export default async function Detail(props) {
                 <div className="list-item" >
                     <h1 className="">{post.title}</h1>
                     <h4 className="">{post.content}</h4>
+                    {/* <h4 className="">{post.content}</h4> */}
                     <p>{dayjs(post.time).format("YYYY/MM/DD HH:mm")}</p>
                 </div>
             </div>

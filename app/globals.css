@@ -73,6 +73,15 @@ button {
   padding: 20px;
 }
 
+.navbar-item {
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  height: 60px;
+  background-color: lightgray;
+  color: black;
+}
+
 .navbar a {
   margin-right: 10px;
   text-decoration: none;
@@ -89,7 +98,18 @@ button {
   height: 100vh;
 }
 
+.comment-date {
+  color: #6c757d;
+  font-size: 0.9em;
+  display: block;
+  margin-top: 5px;
+  margin-left: 8px;
 
+}
+
+button:hover {
+  cursor: pointer
+}
 
 form {
   position: relative;

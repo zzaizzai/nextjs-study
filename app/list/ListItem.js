@@ -4,7 +4,7 @@ import Link from "next/link"
 import dayjs from "dayjs";
 
 export default function ListItem({ posts }) {
-    // console.log(posts)
+    
     return (
         <div className="list-bg">
 
@@ -13,7 +13,7 @@ export default function ListItem({ posts }) {
 
                 <div className="list-item" key={i}>
                     <Link prefetch={false} href={'/detail/' + post._id}><h4>{post.title}</h4></Link>
-                    <p>{dayjs(post.time).format("MM/DD HH:mm")}</p>
+                    <p>{dayjs(post.date).format("MM/DD HH:mm")}</p>
                     <Link href={'/edit/' + post._id}>Edit</Link>
 
                     <span className="mx-10 showPointer" onClick={(e) => {

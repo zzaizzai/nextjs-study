@@ -3,8 +3,7 @@ import { Inter } from 'next/font/google'
 import Link from "next/link";
 import LoginBtn from '../components/LoginBtn';
 import LogoutBtn from '../components/LogoutBtn';
-import { authOptions } from "@/pages/api/auth/[...nextauth].js"
-import { getServerSession } from "next-auth"
+import { isLoggedIn, getUserData } from "@/pages/api/auth/auth.js"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,22 +13,36 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }) {
+  let islogin = await isLoggedIn()
+  let user = await getUserData()
 
-  let session = await getServerSession(authOptions)
-  if (session) {
-    console.log(session)
+  if (islogin) {
+    return (
+      <html lang="en">
+        <body>
+          <div className="navbar">
+            <Link className='navbar-item' href="/">Home</Link>
+            <Link className='navbar-item' href="/list">List</Link>
+            <Link className='navbar-item' href="/write">Write</Link>
+            <div className='login-button'>{islogin ? <div>{user.name} <LogoutBtn/></div> : <LoginBtn />}</div>
+          </div>
+          {children}
+        </body>
+      </html>
+
+    )
+  } else {
+
+
   }
   return (
     <html lang="en">
       <body>
-        <div className="navbar">
-          <Link href="/">home</Link>
-          <Link href="/list">List</Link>
-          <Link href="/write">Write</Link>
-          <div className='login-button'>{session?.user.name ? <LogoutBtn /> : <LoginBtn />}</div>
-        </div>
-        {children}
+        <div className='container'>Please Login :) <LoginBtn /></div>
       </body>
     </html>
+
+
+
   )
 }
